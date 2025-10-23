@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Management Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Project Management Dashboard</h1>
+    <p>Track your tasks easily 🚀</p>
+  </header>
+
+  <main>
+    <section class="add-task">
+      <h2>Add New Task</h2>
+      <input type="text" id="taskInput" placeholder="Enter task name">
+      <button id="addBtn">Add Task</button>
+    </section>
+
+    <section class="tasks">
+      <h2>Task List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Status</th>
+            <th>Change Status</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody id="taskTable"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Project Management Dashboard</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
