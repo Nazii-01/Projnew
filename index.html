@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOC Theory Guide</title>
+    <title>Node.js 16-Mark Questions Study Guide</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
             padding: 20px;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -26,1205 +27,1255 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-        
-        .header {
+
+        header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .question-block {
+            margin-bottom: 60px;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .question-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
-            text-align: center;
+            padding: 25px;
         }
-        
-        .header h1 {
-            font-size: 2em;
+
+        .question-number {
+            font-size: 1.2em;
+            font-weight: bold;
             margin-bottom: 10px;
         }
-        
-        .header p {
-            opacity: 0.9;
+
+        .question-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .marks {
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .intro {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .section-heading {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            font-weight: bold;
+        }
+
+        .diagram {
+            background: white;
+            border: 2px solid #cbd5e0;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .box {
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px auto;
+            max-width: 350px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+
+        .arrow {
+            color: #667eea;
+            font-size: 2.5em;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .points-list {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .point-item {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+        }
+
+        .point-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
             font-size: 1.1em;
         }
-        
-        .content {
-            display: flex;
-            min-height: 500px;
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
         }
-        
-        .sidebar {
-            width: 300px;
-            background: #f8f9fa;
-            border-right: 2px solid #e9ecef;
+
+        .feature-card {
+            background: white;
             padding: 20px;
-            overflow-y: auto;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+            text-align: center;
+            transition: transform 0.3s;
         }
-        
-        .unit {
-            margin-bottom: 25px;
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
-        
-        .unit-title {
-            font-weight: bold;
+
+        .feature-card h4 {
             color: #667eea;
             margin-bottom: 10px;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 1.2em;
         }
-        
-        .topic-btn {
-            display: block;
+
+        .command-table {
             width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 8px;
+            border-collapse: collapse;
+            margin: 20px 0;
             background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.3s;
-            font-size: 0.95em;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        
-        .topic-btn:hover {
-            border-color: #667eea;
-            background: #f0f3ff;
-            transform: translateX(5px);
-        }
-        
-        .topic-btn.active {
+
+        .command-table th {
             background: #667eea;
             color: white;
-            border-color: #667eea;
+            padding: 15px;
+            text-align: left;
+            font-size: 1.1em;
         }
-        
-        .main-content {
+
+        .command-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .command-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .command-table code {
+            background: #2d3748;
+            color: #68d391;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .workflow {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .workflow-step {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 10px;
             flex: 1;
-            padding: 30px;
-            overflow-y: auto;
+            min-width: 200px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-weight: bold;
+            font-size: 1.1em;
         }
-        
-        .theory-content {
-            display: none;
-        }
-        
-        .theory-content.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .theory-content h2 {
+
+        .workflow-arrow {
+            font-size: 2.5em;
             color: #667eea;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
+            font-weight: bold;
         }
-        
-        .theory-content h3 {
-            color: #764ba2;
-            margin-top: 25px;
-            margin-bottom: 15px;
+
+        .folder-structure {
+            background: #2d3748;
+            color: #68d391;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            font-size: 1.1em;
+            line-height: 1.8;
         }
-        
-        .definition-box {
-            background: #f0f3ff;
-            border-left: 4px solid #667eea;
-            padding: 15px;
+
+        .output-box {
+            background: #f0fff4;
+            border: 3px solid #48bb78;
+            padding: 20px;
+            border-radius: 10px;
             margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .tuple-box {
-            background: #fff5e6;
-            border-left: 4px solid #ff9800;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 5px;
             font-family: 'Courier New', monospace;
         }
-        
-        .example-box {
-            background: #e8f5e9;
-            border-left: 4px solid #4caf50;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 5px;
+
+        .output-box strong {
+            color: #2f855a;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
         }
-        
-        .diagram {
-            margin: 20px 0;
+
+        .note-box {
+            background: #fff5e1;
+            border: 3px solid #f39c12;
             padding: 20px;
-            background: #fafafa;
+            margin: 20px 0;
             border-radius: 10px;
-            text-align: center;
         }
-        
-        .copy-btn {
-            background: #4caf50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            font-size: 1em;
-            transition: all 0.3s;
+
+        .note-box strong {
+            color: #e67e22;
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 10px;
         }
-        
-        .copy-btn:hover {
-            background: #45a049;
-            transform: scale(1.05);
+
+        .key-points {
+            background: #e6f2ff;
+            border: 3px solid #3182ce;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
         }
-        
-        .tip {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        ul, ol {
-            margin-left: 20px;
-            margin-top: 10px;
-            line-height: 1.8;
-        }
-        
-        p {
-            line-height: 1.8;
+
+        .key-points h3 {
+            color: #2c5282;
             margin-bottom: 15px;
+            font-size: 1.3em;
         }
-        
-        strong {
-            color: #667eea;
+
+        .key-points ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .key-points li {
+            padding: 10px 0 10px 30px;
+            position: relative;
+            font-size: 1.05em;
+        }
+
+        .key-points li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #3182ce;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 20px 0;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .step-by-step {
+            counter-reset: step;
+        }
+
+        .step {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+            position: relative;
+            padding-left: 80px;
+        }
+
+        .step:before {
+            counter-increment: step;
+            content: "STEP " counter(step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .question-title {
+                font-size: 1.4em;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .step {
+                padding-left: 20px;
+            }
+
+            .step:before {
+                position: static;
+                transform: none;
+                display: block;
+                margin-bottom: 10px;
+            }
+        }
+
+        .print-tip {
+            background: #e6fffa;
+            border: 2px solid #319795;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            color: #234e52;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>📚 Theory of Computation - Exam Theory Guide</h1>
-            <p>Click any topic to get ready-to-write exam theory (fills 1 page!)</p>
-        </div>
-        
+        <header>
+            <h1>📚 Node.js Study Guide</h1>
+            <p>16-Mark Questions with Complete Answers</p>
+            <div style="margin-top: 20px; font-size: 0.9em; opacity: 0.9;">
+                Perfect for Exam Preparation • Easy to Understand • Step-by-Step Explanations
+            </div>
+        </header>
+
         <div class="content">
-            <div class="sidebar">
-                <div class="unit">
-                    <div class="unit-title">Unit I - Automata Fundamentals</div>
-                    <button class="topic-btn" onclick="showTheory('dfa')">Deterministic Finite Automata (DFA)</button>
-                    <button class="topic-btn" onclick="showTheory('nfa')">Non-deterministic Finite Automata (NFA)</button>
-                    <button class="topic-btn" onclick="showTheory('minimization')">DFA Minimization</button>
+            <div class="print-tip">
+                💡 Study Tip: Read each section slowly and understand the diagrams. Practice writing the code examples!
+            </div>
+
+            <!-- Question 1: NPM -->
+            <div class="question-block">
+                <div class="question-header">
+                    <div class="question-number">QUESTION 1</div>
+                    <div class="question-title">Explain Node Package Manager (NPM) in detail with its architecture and important commands.</div>
+                    <div class="marks">📝 16 Marks</div>
                 </div>
-                
-                <div class="unit">
-                    <div class="unit-title">Unit II - Regular Languages</div>
-                    <button class="topic-btn" onclick="showTheory('regex')">Regular Expressions</button>
-                    <button class="topic-btn" onclick="showTheory('pumping')">Pumping Lemma (Proving Non-Regular)</button>
-                    <button class="topic-btn" onclick="showTheory('closure')">Closure Properties</button>
-                </div>
-                
-                <div class="unit">
-                    <div class="unit-title">Unit III - Context Free Grammar</div>
-                    <button class="topic-btn" onclick="showTheory('cfg')">Context Free Grammar (CFG)</button>
-                    <button class="topic-btn" onclick="showTheory('pda')">Push Down Automata (PDA)</button>
-                    <button class="topic-btn" onclick="showTheory('chomsky')">Chomsky Hierarchy</button>
-                </div>
-                
-                <div class="unit">
-                    <div class="unit-title">Unit IV - Normal Forms & TM</div>
-                    <button class="topic-btn" onclick="showTheory('cnf')">Chomsky Normal Form (CNF)</button>
-                    <button class="topic-btn" onclick="showTheory('tm')">Turing Machine (TM)</button>
-                </div>
-                
-                <div class="unit">
-                    <div class="unit-title">Unit V - Decidability</div>
-                    <button class="topic-btn" onclick="showTheory('decidability')">Decidability & Undecidability</button>
-                    <button class="topic-btn" onclick="showTheory('pnp')">P vs NP</button>
+
+                <div class="answer-section">
+                    <div class="intro">
+                        <strong>Introduction:</strong> Node Package Manager (NPM) is a powerful tool that comes with Node.js. It helps developers manage, install, and share reusable code packages. Think of it as an app store for JavaScript libraries! NPM automatically installs when you install Node.js.
+                    </div>
+
+                    <h3 class="section-heading">1. What is NPM? (2 marks)</h3>
+                    <div class="points-list">
+                        <div class="point-item">
+                            <strong>Definition:</strong>
+                            NPM is a package manager for Node.js that allows developers to install, update, and manage software packages (libraries/modules).
+                        </div>
+                        <div class="point-item">
+                            <strong>Purpose:</strong>
+                            It provides a centralized platform with over 2 million packages that developers can use to build applications faster.
+                        </div>
+                    </div>
+
+                    <h3 class="section-heading">2. Features of NPM (4 marks)</h3>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>📦 Package Repository</h4>
+                            <p>Access to 2+ million open-source packages</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🔧 Dependency Management</h4>
+                            <p>Manages project dependencies via package.json</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>📌 Version Control</h4>
+                            <p>Install specific versions for stability</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🌍 Global/Local Install</h4>
+                            <p>Flexible package installation scope</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>⚡ Script Automation</h4>
+                            <p>Create custom commands in package.json</p>
+                        </div>
+                    </div>
+
+                    <h3 class="section-heading">3. NPM Architecture (4 marks)</h3>
+                    <div class="diagram">
+                        <div class="box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-size: 1.1em;">
+                            🌐 NPM Registry<br>
+                            <small>(Online Package Store - npmjs.com)</small>
+                        </div>
+                        <div class="arrow">⬇️</div>
+                        <div class="box" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white; font-size: 1.1em;">
+                            💻 npm CLI Tool<br>
+                            <small>(Command Line Interface)</small>
+                        </div>
+                        <div class="arrow">⬇️</div>
+                        <div class="box" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); color: white; font-size: 1.1em;">
+                            📁 Local Project Directory<br>
+                            <small>node_modules + package.json</small>
+                        </div>
+                    </div>
+
+                    <div class="points-list">
+                        <div class="point-item">
+                            <strong>NPM Registry:</strong>
+                            Central online database that stores all packages with their metadata, versions, and documentation.
+                        </div>
+                        <div class="point-item">
+                            <strong>CLI Tool:</strong>
+                            Command-line interface that developers use to interact with NPM (npm install, npm update, etc.).
+                        </div>
+                        <div class="point-item">
+                            <strong>Local Project:</strong>
+                            Your project folder where packages are downloaded into node_modules folder and tracked by package.json file.
+                        </div>
+                    </div>
+
+                    <h3 class="section-heading">4. package.json Structure (2 marks)</h3>
+                    <div class="code-block">
+<pre>{
+  "name": "myproject",           // Project name
+  "version": "1.0.0",            // Project version
+  "dependencies": {              // Required packages
+    "express": "^4.18.2"
+  },
+  "scripts": {                   // Custom commands
+    "start": "node app.js"
+  }
+}</pre>
+                    </div>
+
+                    <h3 class="section-heading">5. Important NPM Commands (4 marks)</h3>
+                    <table class="command-table">
+                        <thead>
+                            <tr>
+                                <th>Command</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>npm -v</code></td>
+                                <td>Check NPM version installed</td>
+                            </tr>
+                            <tr>
+                                <td><code>npm init</code></td>
+                                <td>Initialize new project (creates package.json)</td>
+                            </tr>
+                            <tr>
+                                <td><code>npm install express</code></td>
+                                <td>Install package locally in project</td>
+                            </tr>
+                            <tr>
+                                <td><code>npm install -g nodemon</code></td>
+                                <td>Install package globally (system-wide)</td>
+                            </tr>
+                            <tr>
+                                <td><code>npm update express</code></td>
+                                <td>Update a package to latest version</td>
+                            </tr>
+                            <tr>
+                                <td><code>npm uninstall express</code></td>
+                                <td>Remove a package from project</td>
+                            </tr>
+                            <tr>
+                                <td><code>npm list</code></td>
+                                <td>Show all installed packages</td>
+                            </tr>
+                            <tr>
+                                <td><code>npm audit fix</code></td>
+                                <td>Fix security vulnerabilities</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="key-points">
+                        <h3>🎯 Key Points to Remember:</h3>
+                        <ul>
+                            <li>NPM comes bundled with Node.js installation</li>
+                            <li>package.json is the heart of every Node.js project</li>
+                            <li>Local packages go in node_modules folder</li>
+                            <li>Global packages can be used across all projects</li>
+                            <li>Always run npm audit to check for vulnerabilities</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            
-            <div class="main-content">
-                <div id="default" class="theory-content active">
-                    <h2>Welcome to Your TOC Theory Guide! 🎓</h2>
-                    <p>This guide contains <strong>ready-to-write theory</strong> for your exam answers. Each topic includes:</p>
-                    <ul>
-                        <li>✅ <strong>Introduction</strong> - What the concept is about</li>
-                        <li>✅ <strong>Formal Definition</strong> - The tuple format examiners want</li>
-                        <li>✅ <strong>Working/Explanation</strong> - How it works in simple terms</li>
-                        <li>✅ <strong>Diagrams</strong> - Visual representations where needed</li>
-                        <li>✅ <strong>Key Points</strong> - Important facts to remember</li>
-                    </ul>
-                    
-                    <div class="tip">
-                        <strong>💡 Exam Strategy:</strong> Write this theory FIRST (fills ~1 page), then solve the problem. This shows you understand the concept deeply!
-                    </div>
-                    
-                    <p style="margin-top: 30px; font-size: 1.1em; color: #667eea;">👈 <strong>Click any topic from the left sidebar to start!</strong></p>
+
+            <!-- Question 2: Built-in Modules -->
+            <div class="question-block">
+                <div class="question-header">
+                    <div class="question-number">QUESTION 2</div>
+                    <div class="question-title">Describe the important built-in modules in Node.js with examples and explain the NPM Registry workflow.</div>
+                    <div class="marks">📝 16 Marks</div>
                 </div>
-                
-                <!-- DFA Theory -->
-                <div id="dfa" class="theory-content">
-                    <h2>Deterministic Finite Automata (DFA)</h2>
-                    
-                    <h3>Introduction</h3>
-                    <p>A Deterministic Finite Automaton (DFA) is a mathematical model used to recognize patterns in strings. It is called "deterministic" because for each state and input symbol, there is exactly one transition to the next state. DFA is the simplest form of automata and forms the foundation of Theory of Computation. It is widely used in lexical analysis, text processing, and pattern matching applications.</p>
-                    
-                    <div class="definition-box">
-                        <strong>Formal Definition:</strong>
-                        <p>A DFA is a 5-tuple mathematical model represented as:</p>
+
+                <div class="answer-section">
+                    <div class="intro">
+                        <strong>Introduction:</strong> Node.js comes with built-in modules (no installation needed!) that provide essential functionalities like file operations, creating servers, working with paths, handling events, and getting system information.
                     </div>
-                    
-                    <div class="tuple-box">
-                        <strong>M = (Q, Σ, δ, q₀, F)</strong><br><br>
-                        Where:<br>
-                        • <strong>Q</strong> = Finite set of states<br>
-                        • <strong>Σ</strong> = Finite set of input symbols (alphabet)<br>
-                        • <strong>δ</strong> = Transition function: Q × Σ → Q<br>
-                        • <strong>q₀</strong> = Initial/Start state (q₀ ∈ Q)<br>
-                        • <strong>F</strong> = Set of final/accepting states (F ⊆ Q)
+
+                    <h3 class="section-heading">1. Five Important Built-in Modules (10 marks)</h3>
+
+                    <div class="points-list">
+                        <div class="point-item">
+                            <strong>1. fs Module (File System) - 2 marks</strong>
+                            <p><strong>Purpose:</strong> Read, write, delete files and folders</p>
+                            <div class="code-block">
+<pre>const fs = require('fs');
+
+// Write to a file
+fs.writeFileSync("output.txt", "Hello World!");
+
+// Read from a file
+const data = fs.readFileSync("output.txt", "utf8");
+console.log(data);  // Output: Hello World!</pre>
+                            </div>
+                            <p><strong>Use Case:</strong> Saving user data, reading configuration files, logging</p>
+                        </div>
+
+                        <div class="point-item">
+                            <strong>2. http Module (Web Server) - 2 marks</strong>
+                            <p><strong>Purpose:</strong> Create web servers to handle HTTP requests</p>
+                            <div class="code-block">
+<pre>const http = require('http');
+
+// Create a server
+const server = http.createServer((req, res) => {
+    res.end("Hello from Node.js Server!");
+});
+
+server.listen(3000);
+console.log("Server running on port 3000");</pre>
+                            </div>
+                            <p><strong>Use Case:</strong> Building REST APIs, web applications</p>
+                        </div>
+
+                        <div class="point-item">
+                            <strong>3. os Module (Operating System) - 2 marks</strong>
+                            <p><strong>Purpose:</strong> Get system information like memory, CPU, platform</p>
+                            <div class="code-block">
+<pre>const os = require('os');
+
+console.log("Free Memory:", os.freemem());
+console.log("Total Memory:", os.totalmem());
+console.log("Platform:", os.platform());
+console.log("CPU Info:", os.cpus());</pre>
+                            </div>
+                            <p><strong>Use Case:</strong> System monitoring, performance checking</p>
+                        </div>
+
+                        <div class="point-item">
+                            <strong>4. path Module (File Paths) - 2 marks</strong>
+                            <p><strong>Purpose:</strong> Work with file and directory paths</p>
+                            <div class="code-block">
+<pre>const path = require('path');
+
+console.log(path.extname("file.txt"));      // Output: .txt
+console.log(path.basename("C:/user/file.txt")); // Output: file.txt
+console.log(path.dirname("C:/user/file.txt"));  // Output: C:/user
+console.log(path.join("/user", "docs", "file.txt")); // C:/user/docs/file.txt</pre>
+                            </div>
+                            <p><strong>Use Case:</strong> Building file paths, getting file extensions</p>
+                        </div>
+
+                        <div class="point-item">
+                            <strong>5. events Module (Event Handling) - 2 marks</strong>
+                            <p><strong>Purpose:</strong> Create and manage custom events</p>
+                            <div class="code-block">
+<pre>const EventEmitter = require('events');
+const emitter = new EventEmitter();
+
+// Register event listener
+emitter.on("start", () => {
+    console.log("Application Started!");
+});
+
+// Trigger event
+emitter.emit("start");  // Output: Application Started!</pre>
+                            </div>
+                            <p><strong>Use Case:</strong> Building event-driven applications, handling user actions</p>
+                        </div>
                     </div>
-                    
-                    <h3>How DFA Works</h3>
-                    <p>A DFA processes input symbols one at a time from left to right. It starts in the initial state q₀ and moves to different states based on the transition function δ. After reading all input symbols, if the DFA ends in a final state (any state in F), the string is accepted; otherwise, it is rejected. The key characteristic is that at any point, the DFA is in exactly one state, and each input symbol determines a unique next state.</p>
-                    
-                    <div class="diagram">
-                        <svg width="400" height="150" viewBox="0 0 400 150">
-                            <!-- Start state -->
-                            <circle cx="60" cy="75" r="30" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
-                            <text x="60" y="80" text-anchor="middle" font-size="16" fill="#1976d2">q₀</text>
-                            <line x1="10" y1="75" x2="30" y2="75" stroke="#1976d2" stroke-width="2" marker-end="url(#arrowblue)"/>
-                            
-                            <!-- Intermediate state -->
-                            <circle cx="200" cy="75" r="30" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
-                            <text x="200" y="80" text-anchor="middle" font-size="16" fill="#f57c00">q₁</text>
-                            
-                            <!-- Final state (double circle) -->
-                            <circle cx="340" cy="75" r="30" fill="#e8f5e9" stroke="#388e3c" stroke-width="2"/>
-                            <circle cx="340" cy="75" r="24" fill="none" stroke="#388e3c" stroke-width="2"/>
-                            <text x="340" y="80" text-anchor="middle" font-size="16" fill="#388e3c">q₂</text>
-                            
-                            <!-- Transitions -->
-                            <defs>
-                                <marker id="arrowblue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-                                    <polygon points="0 0, 10 3, 0 6" fill="#1976d2"/>
-                                </marker>
-                            </defs>
-                            <line x1="90" y1="75" x2="170" y2="75" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
-                            <text x="130" y="65" text-anchor="middle" font-size="14">0</text>
-                            <line x1="230" y1="75" x2="310" y2="75" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
-                            <text x="270" y="65" text-anchor="middle" font-size="14">1</text>
-                            
-                            <defs>
-                                <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-                                    <polygon points="0 0, 10 3, 0 6" fill="#333"/>
-                                </marker>
-                            </defs>
-                        </svg>
-                        <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Simple DFA diagram showing states and transitions</p>
+
+                    <h3 class="section-heading">2. NPM Registry (3 marks)</h3>
+                    <div class="points-list">
+                        <div class="point-item">
+                            <strong>What is NPM Registry?</strong>
+                            The NPM Registry is a central online database (npmjs.com) that stores all JavaScript packages. It's like a library where developers can publish their packages and others can download them.
+                        </div>
+                        <div class="point-item">
+                            <strong>Roles of NPM Registry:</strong>
+                            <ul style="margin-top: 10px; margin-left: 20px;">
+                                <li>Stores package metadata (name, version, author, description)</li>
+                                <li>Distributes packages to developers worldwide</li>
+                                <li>Tracks download statistics</li>
+                                <li>Manages package versions (semantic versioning)</li>
+                                <li>Ensures packages are available 24/7</li>
+                            </ul>
+                        </div>
                     </div>
-                    
-                    <h3>Key Properties of DFA</h3>
-                    <div class="example-box">
-                        <ul>
-                            <li><strong>Determinism:</strong> For each state and input symbol, there is exactly one next state</li>
-                            <li><strong>No ε-transitions:</strong> DFA cannot make transitions without reading input</li>
-                            <li><strong>Complete:</strong> Every state must have transitions defined for all input symbols</li>
-                            <li><strong>Memory-less:</strong> DFA has no memory except its current state</li>
-                            <li><strong>Language Recognition:</strong> DFA recognizes regular languages only</li>
-                        </ul>
+
+                    <h3 class="section-heading">3. NPM Registry Workflow (3 marks)</h3>
+                    <div class="workflow">
+                        <div class="workflow-step">
+                            👨‍💻 Step 1<br><br>
+                            Developer Creates<br>& Publishes Package<br>
+                            <code style="background: rgba(255,255,255,0.2); padding: 5px; border-radius: 5px; margin-top: 10px; display: block;">npm publish</code>
+                        </div>
+                        <div class="workflow-arrow">→</div>
+                        <div class="workflow-step">
+                            🗄️ Step 2<br><br>
+                            NPM Registry<br>Stores Package<br>
+                            <small style="margin-top: 10px; display: block;">(npmjs.com)</small>
+                        </div>
+                        <div class="workflow-arrow">→</div>
+                        <div class="workflow-step">
+                            👥 Step 3<br><br>
+                            Other Developers<br>Install Package<br>
+                            <code style="background: rgba(255,255,255,0.2); padding: 5px; border-radius: 5px; margin-top: 10px; display: block;">npm install</code>
+                        </div>
                     </div>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> Always draw the state diagram after writing theory. Label start state with an arrow, final states with double circles, and clearly mark all transitions!
-                    </div>
-                </div>
-                
-                <!-- NFA Theory -->
-                <div id="nfa" class="theory-content">
-                    <h2>Non-deterministic Finite Automata (NFA)</h2>
-                    
-                    <h3>Introduction</h3>
-                    <p>A Non-deterministic Finite Automaton (NFA) is similar to DFA but allows more flexibility in state transitions. Unlike DFA, an NFA can be in multiple states simultaneously, can have multiple transitions for the same input symbol from a given state, and can make epsilon (ε) transitions without consuming any input. This non-determinism makes NFAs easier to design for certain languages, though they have the same computational power as DFAs.</p>
-                    
-                    <div class="definition-box">
-                        <strong>Formal Definition:</strong>
-                        <p>An NFA is a 5-tuple mathematical model represented as:</p>
-                    </div>
-                    
-                    <div class="tuple-box">
-                        <strong>M = (Q, Σ, δ, q₀, F)</strong><br><br>
-                        Where:<br>
-                        • <strong>Q</strong> = Finite set of states<br>
-                        • <strong>Σ</strong> = Finite set of input symbols (alphabet)<br>
-                        • <strong>δ</strong> = Transition function: Q × (Σ ∪ {ε}) → 2^Q<br>
-                        • <strong>q₀</strong> = Initial/Start state (q₀ ∈ Q)<br>
-                        • <strong>F</strong> = Set of final/accepting states (F ⊆ Q)<br><br>
-                        <em>Note: 2^Q represents the power set (all possible subsets) of Q</em>
-                    </div>
-                    
-                    <h3>Differences Between DFA and NFA</h3>
-                    <div class="example-box">
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <tr style="background: #667eea; color: white;">
-                                <th style="padding: 10px; border: 1px solid #ddd;">Aspect</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">DFA</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">NFA</th>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px; border: 1px solid #ddd;"><strong>Transitions</strong></td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Exactly one per state-symbol pair</td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Zero, one, or multiple transitions</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px; border: 1px solid #ddd;"><strong>ε-transitions</strong></td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Not allowed</td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Allowed</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px; border: 1px solid #ddd;"><strong>Current State</strong></td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Always in one state</td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Can be in multiple states</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px; border: 1px solid #ddd;"><strong>Acceptance</strong></td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Deterministic</td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">If any path leads to final state</td>
-                            </tr>
-                        </table>
-                    </div>
-                    
-                    <h3>How NFA Works</h3>
-                    <p>An NFA starts in the initial state q₀ and can simultaneously explore multiple paths through the state diagram for a given input string. For each input symbol, the NFA can transition to zero, one, or multiple next states. Additionally, ε-transitions allow movement between states without consuming input. A string is accepted if there exists at least one path from the initial state to any final state that consumes the entire input. The non-deterministic nature means the automaton makes the "right choice" among multiple possibilities.</p>
-                    
-                    <h3>Important Theorems</h3>
-                    <div class="definition-box">
-                        <p><strong>Equivalence Theorem:</strong> For every NFA, there exists an equivalent DFA that accepts the same language. This means NFAs and DFAs have the same computational power - they both recognize exactly the regular languages. The conversion from NFA to DFA uses the subset construction method, where each DFA state represents a set of NFA states.</p>
-                    </div>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> When solving NFA problems, first write this theory, draw the NFA diagram with ε-transitions clearly marked, then show all possible paths for the given input string!
-                    </div>
-                </div>
-                
-                <!-- PDA Theory -->
-                <div id="pda" class="theory-content">
-                    <h2>Push Down Automata (PDA)</h2>
-                    
-                    <h3>Introduction</h3>
-                    <p>A Push Down Automaton (PDA) is an extension of finite automata with an additional stack memory. While finite automata can only recognize regular languages, PDAs can recognize context-free languages, which are more powerful. The stack provides unlimited memory that can be accessed in a Last-In-First-Out (LIFO) manner. This makes PDAs suitable for recognizing nested structures like balanced parentheses, palindromes, and programming language syntax. PDAs are fundamental in compiler design, particularly in parsing.</p>
-                    
-                    <div class="definition-box">
-                        <strong>Formal Definition:</strong>
-                        <p>A PDA is a 7-tuple mathematical model represented as:</p>
-                    </div>
-                    
-                    <div class="tuple-box">
-                        <strong>M = (Q, Σ, Γ, δ, q₀, Z₀, F)</strong><br><br>
-                        Where:<br>
-                        • <strong>Q</strong> = Finite set of states<br>
-                        • <strong>Σ</strong> = Finite input alphabet<br>
-                        • <strong>Γ</strong> = Finite stack alphabet<br>
-                        • <strong>δ</strong> = Transition function: Q × (Σ ∪ {ε}) × Γ → 2^(Q × Γ*)<br>
-                        • <strong>q₀</strong> = Initial state (q₀ ∈ Q)<br>
-                        • <strong>Z₀</strong> = Initial stack symbol (Z₀ ∈ Γ)<br>
-                        • <strong>F</strong> = Set of final/accepting states (F ⊆ Q)
-                    </div>
-                    
-                    <h3>Components of PDA</h3>
-                    <p>A PDA consists of three main components:</p>
-                    <div class="example-box">
-                        <ul>
-                            <li><strong>Input Tape:</strong> Contains the input string to be processed, read from left to right (read-only)</li>
-                            <li><strong>Finite Control:</strong> The state machine that controls the PDA's behavior, similar to states in FA</li>
-                            <li><strong>Stack:</strong> An infinite-capacity LIFO memory structure that stores symbols from the stack alphabet Γ. The stack allows the PDA to remember unlimited information about the input</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="diagram">
-                        <svg width="450" height="200" viewBox="0 0 450 200">
-                            <!-- Input Tape -->
-                            <rect x="20" y="20" width="200" height="40" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
-                            <text x="120" y="45" text-anchor="middle" font-size="14" fill="#1976d2">Input Tape: a b c</text>
-                            <line x1="120" y1="60" x2="120" y2="90" stroke="#1976d2" stroke-width="2" marker-end="url(#arrowblue2)"/>
-                            
-                            <!-- Finite Control -->
-                            <circle cx="120" cy="115" r="25" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
-                            <text x="120" y="120" text-anchor="middle" font-size="14" fill="#f57c00">Control</text>
-                            
-                            <!-- Stack -->
-                            <rect x="280" y="60" width="80" height="120" fill="#e8f5e9" stroke="#388e3c" stroke-width="2"/>
-                            <line x1="280" y1="100" x2="360" y2="100" stroke="#388e3c" stroke-width="1"/>
-                            <line x1="280" y1="140" x2="360" y2="140" stroke="#388e3c" stroke-width="1"/>
-                            <text x="320" y="85" text-anchor="middle" font-size="14" fill="#388e3c">X</text>
-                            <text x="320" y="125" text-anchor="middle" font-size="14" fill="#388e3c">Y</text>
-                            <text x="320" y="165" text-anchor="middle" font-size="14" fill="#388e3c">Z₀</text>
-                            <text x="320" y="50" text-anchor="middle" font-size="12" fill="#388e3c" font-weight="bold">Stack</text>
-                            
-                            <!-- Arrow from control to stack -->
-                            <line x1="145" y1="115" x2="280" y2="115" stroke="#666" stroke-width="2" stroke-dasharray="5,5"/>
-                            
-                            <defs>
-                                <marker id="arrowblue2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-                                    <polygon points="0 0, 10 3, 0 6" fill="#1976d2"/>
-                                </marker>
-                            </defs>
-                        </svg>
-                        <p style="margin-top: 10px; font-size: 0.9em; color: #666;">PDA Structure: Input Tape, Finite Control, and Stack</p>
-                    </div>
-                    
-                    <h3>How PDA Works</h3>
-                    <p>A PDA processes input in steps. In each step, based on the current state, current input symbol (or ε), and the top stack symbol, the PDA:</p>
-                    <ol>
-                        <li>Moves to a new state (or stays in the same state)</li>
-                        <li>Pops the top symbol from the stack</li>
-                        <li>Pushes zero or more symbols onto the stack</li>
-                        <li>Optionally consumes an input symbol (or makes an ε-move)</li>
-                    </ol>
-                    
-                    <h3>Acceptance Methods</h3>
-                    <div class="definition-box">
-                        <p>A PDA can accept strings in two ways:</p>
-                        <ul>
-                            <li><strong>Acceptance by Final State:</strong> String is accepted if, after reading entire input, the PDA is in a final state (regardless of stack contents)</li>
-                            <li><strong>Acceptance by Empty Stack:</strong> String is accepted if, after reading entire input, the stack becomes empty (regardless of current state)</li>
-                        </ul>
-                        <p><em>Note: Both methods are equivalent in power - any language accepted by one method can be accepted by the other.</em></p>
-                    </div>
-                    
-                    <h3>Relationship with Context-Free Grammar</h3>
-                    <p>There is a fundamental equivalence between PDAs and Context-Free Grammars (CFG). For every CFG, we can construct an equivalent PDA that accepts the same language, and vice versa. This equivalence is crucial because it connects the generative model (CFG) with the recognition model (PDA). The stack in PDA essentially maintains the parse tree information during recognition.</p>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> Always mention the 7-tuple, explain stack operations (push/pop) clearly, and show instantaneous descriptions (ID) when solving problems. Draw a simple stack diagram showing how it changes with each step!
-                    </div>
-                </div>
-                
-                <!-- Add more theory sections here for other topics -->
-                <div id="cfg" class="theory-content">
-                    <h2>Context Free Grammar (CFG)</h2>
-                    <h3>Introduction</h3>
-                    <p>A Context-Free Grammar (CFG) is a formal grammar that describes how strings in a language can be generated. It is more powerful than regular grammar and can describe languages with nested or recursive structures. CFG is extensively used in programming language syntax definition, compiler design, natural language processing, and XML/HTML parsing. The term "context-free" means that production rules can be applied regardless of the context (surrounding symbols).</p>
-                    
-                    <div class="tuple-box">
-                        <strong>G = (V, T, P, S)</strong><br><br>
-                        Where:<br>
-                        • <strong>V</strong> = Finite set of variables/non-terminals<br>
-                        • <strong>T</strong> = Finite set of terminals (T ∩ V = ∅)<br>
-                        • <strong>P</strong> = Finite set of production rules<br>
-                        • <strong>S</strong> = Start symbol (S ∈ V)
-                    </div>
-                    
-                    <div class="example-box">
-                        <strong>Example CFG for balanced parentheses:</strong><br>
-                        S → (S)<br>
-                        S → SS<br>
-                        S → ε<br><br>
-                        This generates: (), (()), ()(), ((())), etc.
-                    </div>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> Always show derivation steps and parse tree for any string generation!
-                    </div>
-                </div>
-                
-                <!-- Turing Machine Theory -->
-                <div id="tm" class="theory-content">
-                    <h2>Turing Machine (TM)</h2>
-                    
-                    <h3>Introduction</h3>
-                    <p>A Turing Machine (TM) is the most powerful computational model in automata theory. It was proposed by Alan Turing in 1936 as a mathematical model of computation. Unlike finite automata and pushdown automata, a Turing Machine has an infinite tape that acts as both input and working memory. It can read, write, and move in both directions on the tape. The Turing Machine is the theoretical foundation for modern computers and is used to define what problems are computable. Any algorithm that can be performed by a computer can be performed by a Turing Machine.</p>
-                    
-                    <div class="tuple-box">
-                        <strong>M = (Q, Σ, Γ, δ, q₀, B, F)</strong><br><br>
-                        Where:<br>
-                        • <strong>Q</strong> = Finite set of states<br>
-                        • <strong>Σ</strong> = Finite input alphabet<br>
-                        • <strong>Γ</strong> = Finite tape alphabet (Σ ⊂ Γ)<br>
-                        • <strong>δ</strong> = Transition function: Q × Γ → Q × Γ × {L, R}<br>
-                        • <strong>q₀</strong> = Initial state (q₀ ∈ Q)<br>
-                        • <strong>B</strong> = Blank symbol (B ∈ Γ - Σ)<br>
-                        • <strong>F</strong> = Set of final states (F ⊆ Q)
-                    </div>
-                    
-                    <h3>Components of Turing Machine</h3>
-                    <div class="example-box">
-                        <ul>
-                            <li><strong>Infinite Tape:</strong> Divided into cells, each holding one symbol from Γ. Infinite in both directions.</li>
-                            <li><strong>Tape Head:</strong> Can read and write symbols on the tape and move left (L) or right (R)</li>
-                            <li><strong>Finite Control:</strong> Contains the current state and controls the machine's behavior</li>
-                            <li><strong>Transition Function:</strong> Defines the action based on current state and tape symbol</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="diagram">
-                        <svg width="500" height="180" viewBox="0 0 500 180">
-                            <!-- Tape -->
-                            <rect x="50" y="40" width="50" height="40" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
-                            <rect x="100" y="40" width="50" height="40" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
-                            <rect x="150" y="40" width="50" height="40" fill="#ffeb3b" stroke="#1976d2" stroke-width="2"/>
-                            <rect x="200" y="40" width="50" height="40" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
-                            <rect x="250" y="40" width="50" height="40" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
-                            <rect x="300" y="40" width="50" height="40" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
-                            
-                            <!-- Tape symbols -->
-                            <text x="75" y="65" text-anchor="middle" font-size="16">a</text>
-                            <text x="125" y="65" text-anchor="middle" font-size="16">b</text>
-                            <text x="175" y="65" text-anchor="middle" font-size="16" font-weight="bold">a</text>
-                            <text x="225" y="65" text-anchor="middle" font-size="16">b</text>
-                            <text x="275" y="65" text-anchor="middle" font-size="16">B</text>
-                            <text x="325" y="65" text-anchor="middle" font-size="16">B</text>
-                            
-                            <!-- Dots indicating infinite tape -->
-                            <text x="30" y="65" text-anchor="middle" font-size="20">...</text>
-                            <text x="370" y="65" text-anchor="middle" font-size="20">...</text>
-                            
-                            <!-- Tape Head -->
-                            <polygon points="175,90 160,110 190,110" fill="#f57c00" stroke="#e65100" stroke-width="2"/>
-                            <text x="175" y="100" text-anchor="middle" font-size="12" fill="white">▼</text>
-                            
-                            <!-- Control Unit -->
-                            <rect x="125" y="120" width="100" height="50" fill="#e8f5e9" stroke="#388e3c" stroke-width="2" rx="5"/>
-                            <text x="175" y="140" text-anchor="middle" font-size="14" fill="#388e3c" font-weight="bold">Finite</text>
-                            <text x="175" y="160" text-anchor="middle" font-size="14" fill="#388e3c" font-weight="bold">Control (q₁)</text>
-                        </svg>
-                        <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Turing Machine: Infinite Tape with Read/Write Head</p>
-                    </div>
-                    
-                    <h3>How Turing Machine Works</h3>
-                    <p>The TM starts with input written on the tape and the tape head positioned at the leftmost input symbol. Based on the current state and symbol under the tape head, the transition function determines:</p>
-                    <ol>
-                        <li>The symbol to write on the tape (replacing current symbol)</li>
-                        <li>The direction to move the tape head (Left or Right)</li>
-                        <li>The next state to transition to</li>
-                    </ol>
-                    <p>The machine halts when it reaches a final state (accepting) or when there is no defined transition (rejecting).</p>
-                    
-                    <h3>Types of Turing Machines</h3>
-                    <div class="definition-box">
-                        <ul>
-                            <li><strong>Deterministic TM:</strong> Single transition for each state-symbol pair</li>
-                            <li><strong>Non-deterministic TM:</strong> Multiple possible transitions (equivalent power to DTM)</li>
-                            <li><strong>Multi-tape TM:</strong> Has multiple tapes with separate heads</li>
-                            <li><strong>Universal TM:</strong> Can simulate any other TM (foundation of programmable computers)</li>
-                        </ul>
-                    </div>
-                    
-                    <h3>Church-Turing Thesis</h3>
-                    <div class="definition-box">
-                        <p>The Church-Turing Thesis states that any function that can be computed by an algorithm can be computed by a Turing Machine. This thesis establishes TM as the ultimate model of computation - anything computable can be computed by a TM. It defines the theoretical limits of what computers can do.</p>
-                    </div>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> Always write instantaneous descriptions (IDs) showing tape contents, head position, and current state for each step of computation!
-                    </div>
-                </div>
-                
-                <!-- Chomsky Hierarchy Theory -->
-                <div id="chomsky" class="theory-content">
-                    <h2>Chomsky Hierarchy of Languages</h2>
-                    
-                    <h3>Introduction</h3>
-                    <p>The Chomsky Hierarchy, proposed by Noam Chomsky, classifies formal languages into four types based on their generative power and the automata that recognize them. This hierarchy shows that each type is a proper subset of the next more powerful type. Understanding this hierarchy is fundamental to compiler design, natural language processing, and the theory of computation. It provides a systematic way to categorize languages based on their computational complexity.</p>
-                    
-                    <div class="diagram">
-                        <svg width="450" height="350" viewBox="0 0 450 350">
-                            <!-- Type 0 (outermost) -->
-                            <ellipse cx="225" cy="175" rx="200" ry="150" fill="#ffebee" stroke="#c62828" stroke-width="2"/>
-                            <text x="350" y="40" font-size="14" fill="#c62828" font-weight="bold">Type 0</text>
-                            <text x="330" y="60" font-size="12" fill="#c62828">Recursively Enumerable</text>
-                            
-                            <!-- Type 1 -->
-                            <ellipse cx="225" cy="180" rx="160" ry="120" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
-                            <text x="320" y="90" font-size="14" fill="#e65100" font-weight="bold">Type 1</text>
-                            <text x="300" y="105" font-size="12" fill="#e65100">Context Sensitive</text>
-                            
-                            <!-- Type 2 -->
-                            <ellipse cx="225" cy="185" rx="120" ry="90" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
-                            <text x="280" y="130" font-size="14" fill="#2e7d32" font-weight="bold">Type 2</text>
-                            <text x="260" y="145" font-size="12" fill="#2e7d32">Context Free</text>
-                            
-                            <!-- Type 3 (innermost) -->
-                            <ellipse cx="225" cy="190" rx="80" ry="60" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
-                            <text x="240" y="180" font-size="14" fill="#1565c0" font-weight="bold">Type 3</text>
-                            <text x="225" y="195" text-anchor="middle" font-size="12" fill="#1565c0">Regular</text>
-                        </svg>
-                        <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Chomsky Hierarchy: Each type contains all inner types</p>
-                    </div>
-                    
-                    <h3>Type 3 - Regular Languages</h3>
-                    <div class="definition-box">
-                        <p><strong>Grammar Type:</strong> Right-linear or Left-linear grammar</p>
-                        <p><strong>Production Rules:</strong> A → aB or A → a (right-linear) OR A → Ba or A → a (left-linear)</p>
-                        <p><strong>Recognized By:</strong> Finite Automata (DFA/NFA)</p>
-                        <p><strong>Examples:</strong> (a+b)*, a^n where n ≥ 0, identifiers in programming languages</p>
-                        <p><strong>Applications:</strong> Lexical analysis, pattern matching, text search</p>
-                    </div>
-                    
-                    <h3>Type 2 - Context-Free Languages</h3>
-                    <div class="definition-box">
-                        <p><strong>Grammar Type:</strong> Context-Free Grammar (CFG)</p>
-                        <p><strong>Production Rules:</strong> A → α (where A is a single non-terminal, α is any string of terminals/non-terminals)</p>
-                        <p><strong>Recognized By:</strong> Pushdown Automata (PDA)</p>
-                        <p><strong>Examples:</strong> a^n b^n, balanced parentheses, palindromes, programming language syntax</p>
-                        <p><strong>Applications:</strong> Syntax analysis/parsing, compiler design, XML/JSON validation</p>
-                    </div>
-                    
-                    <h3>Type 1 - Context-Sensitive Languages</h3>
-                    <div class="definition-box">
-                        <p><strong>Grammar Type:</strong> Context-Sensitive Grammar (CSG)</p>
-                        <p><strong>Production Rules:</strong> αAβ → αγβ (where |γ| ≥ |A|, meaning productions can only replace A in context of α and β)</p>
-                        <p><strong>Recognized By:</strong> Linear Bounded Automaton (LBA)</p>
-                        <p><strong>Examples:</strong> a^n b^n c^n, natural language constructs with agreement</p>
-                        <p><strong>Applications:</strong> Natural language processing, complex syntax checking</p>
-                    </div>
-                    
-                    <h3>Type 0 - Recursively Enumerable Languages</h3>
-                    <div class="definition-box">
-                        <p><strong>Grammar Type:</strong> Unrestricted Grammar</p>
-                        <p><strong>Production Rules:</strong> α → β (no restrictions, α must contain at least one non-terminal)</p>
-                        <p><strong>Recognized By:</strong> Turing Machine</p>
-                        <p><strong>Examples:</strong> All computable languages, halting problem (undecidable)</p>
-                        <p><strong>Applications:</strong> Theoretical foundation of computation, studying computability limits</p>
-                    </div>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> Always draw the hierarchy diagram and create a comparison table showing grammar type, production rules, automaton, and examples!
-                    </div>
-                </div>
-                
-                <!-- Regular Expressions Theory -->
-                <div id="regex" class="theory-content">
-                    <h2>Regular Expressions</h2>
-                    
-                    <h3>Introduction</h3>
-                    <p>Regular Expressions (RegEx) are algebraic notations for describing regular languages. They provide a concise and powerful way to specify patterns in strings. Regular expressions are widely used in text editors, search engines, programming languages, and compiler design for pattern matching and text processing. They are equivalent in power to finite automata - every regular expression can be converted to an equivalent FA and vice versa.</p>
-                    
-                    <h3>Basic Operations</h3>
-                    <div class="example-box">
-                        <ul>
-                            <li><strong>Union (|):</strong> L₁ | L₂ = {x | x ∈ L₁ or x ∈ L₂}</li>
-                            <li><strong>Concatenation (·):</strong> L₁ · L₂ = {xy | x ∈ L₁ and y ∈ L₂}</li>
-                            <li><strong>Kleene Star (*):</strong> L* = {ε} ∪ L ∪ LL ∪ LLL ∪ ... (zero or more occurrences)</li>
-                            <li><strong>Plus (+):</strong> L⁺ = LL* (one or more occurrences)</li>
-                        </ul>
-                    </div>
-                    
-                    <h3>Formal Definition</h3>
-                    <div class="definition-box">
-                        <p>Regular expressions over an alphabet Σ are defined recursively:</p>
-                        <ol>
-                            <li>∅ (empty set) is a regular expression</li>
-                            <li>ε (empty string) is a regular expression</li>
-                            <li>Every symbol a ∈ Σ is a regular expression</li>
-                            <li>If r₁ and r₂ are regular expressions, then:
-                                <ul>
-                                    <li>(r₁ | r₂) is a regular expression</li>
-                                    <li>(r₁ · r₂) is a regular expression</li>
-                                    <li>(r₁*) is a regular expression</li>
-                                </ul>
-                            </li>
+
+                    <div class="note-box">
+                        <strong>📌 Workflow Explanation:</strong>
+                        <ol style="margin-left: 20px; margin-top: 10px;">
+                            <li><strong>Publishing:</strong> A developer creates a useful package and publishes it to NPM Registry using "npm publish"</li>
+                            <li><strong>Storage:</strong> The registry stores the package with all its details, versions, and documentation</li>
+                            <li><strong>Installation:</strong> Any developer worldwide can install this package using "npm install package-name"</li>
                         </ol>
                     </div>
-                    
-                    <h3>Common Patterns and Examples</h3>
-                    <div class="example-box">
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <tr style="background: #667eea; color: white;">
-                                <th style="padding: 10px; border: 1px solid #ddd;">Pattern</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Regular Expression</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Language Description</th>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px; border: 1px solid #ddd;">All strings over {0,1}</td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">(0|1)*</td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Any combination of 0s and 1s</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Strings starting with a</td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">a(a|b)*</td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Starts with 'a', followed by any</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Even length strings</td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">((a|b)(a|b))*</td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Strings with even number of symbols</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Contains substring ab</td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">(a|b)*ab(a|b)*</td>
-                                <td style="padding: 10px; border: 1px solid #ddd;">Must contain 'ab' somewhere</td>
-                            </tr>
-                        </table>
-                    </div>
-                    
-                    <h3>Conversion Between RE and FA</h3>
-                    <div class="definition-box">
-                        <p><strong>RE to NFA (Thompson's Construction):</strong> Build NFA by recursively applying construction rules for union, concatenation, and Kleene star operations.</p>
-                        <p><strong>FA to RE (State Elimination Method):</strong> Eliminate states one by one, replacing transitions with regular expressions until only start and final state remain.</p>
-                    </div>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> For conversion problems, show each step clearly. For RE to FA, draw NFA fragments for each operation. For FA to RE, show the automaton after each state elimination!
+
+                    <div class="key-points">
+                        <h3>🎯 Key Points to Remember:</h3>
+                        <ul>
+                            <li>Built-in modules require no installation, just use require()</li>
+                            <li>fs module is for file operations, http for servers</li>
+                            <li>os module gives system info, path handles file paths</li>
+                            <li>events module creates custom event-driven applications</li>
+                            <li>NPM Registry is the central hub for all Node.js packages</li>
+                        </ul>
                     </div>
                 </div>
-                
-                <!-- Pumping Lemma Theory -->
-                <div id="pumping" class="theory-content">
-                    <h2>Pumping Lemma for Regular Languages</h2>
-                    
-                    <h3>Introduction</h3>
-                    <p>The Pumping Lemma is a powerful tool used to prove that certain languages are NOT regular. It is based on the pigeonhole principle: if a string is long enough in a regular language, it must repeat some portion due to the finite number of states in any FA recognizing it. While the Pumping Lemma can prove a language is non-regular, it cannot prove a language IS regular. This is a necessary but not sufficient condition for regularity.</p>
-                    
-                    <div class="definition-box">
-                        <strong>Pumping Lemma Statement:</strong>
-                        <p>If L is a regular language, then there exists a positive integer p (pumping length) such that any string w ∈ L with |w| ≥ p can be divided into three parts w = xyz satisfying:</p>
-                        <ol>
-                            <li>|xy| ≤ p (the first two parts together have length at most p)</li>
-                            <li>|y| ≥ 1 (the middle part y is non-empty)</li>
-                            <li>For all i ≥ 0, xy^i z ∈ L (we can "pump" y any number of times and stay in L)</li>
-                        </ol>
+            </div>
+
+            <!-- Question 3: Creating Packaged Module -->
+            <div class="question-block">
+                <div class="question-header">
+                    <div class="question-number">QUESTION 3</div>
+                    <div class="question-title">Explain the steps to create a Node.js packaged module with complete code examples and directory structure.</div>
+                    <div class="marks">📝 16 Marks</div>
+                </div>
+
+                <div class="answer-section">
+                    <div class="intro">
+                        <strong>Introduction:</strong> A packaged module is a reusable piece of code that can be shared and used across different projects. It includes its own metadata (information), dependencies, version number, and exported functions. Creating a module helps organize code and promotes reusability.
                     </div>
-                    
-                    <h3>How to Use Pumping Lemma (Proof by Contradiction)</h3>
-                    <div class="example-box">
-                        <p><strong>Step 1:</strong> Assume L is regular (for contradiction)</p>
-                        <p><strong>Step 2:</strong> Let p be the pumping length guaranteed by the Pumping Lemma</p>
-                        <p><strong>Step 3:</strong> Choose a specific string w ∈ L with |w| ≥ p (choose wisely!)</p>
-                        <p><strong>Step 4:</strong> Consider all possible ways to divide w = xyz satisfying conditions 1 and 2</p>
-                        <p><strong>Step 5:</strong> Show that for some value of i, xy^i z ∉ L (violating condition 3)</p>
-                        <p><strong>Step 6:</strong> This contradicts the Pumping Lemma, so L cannot be regular</p>
+
+                    <h3 class="section-heading">1. What is a Packaged Module? (2 marks)</h3>
+                    <div class="points-list">
+                        <div class="point-item">
+                            <strong>Definition:</strong>
+                            A packaged module is a collection of code bundled together with its configuration (package.json) that can be reused in multiple projects or shared with other developers.
+                        </div>
+                        <div class="point-item">
+                            <strong>Benefits:</strong>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Code Reusability - Write once, use many times</li>
+                                <li>Better Organization - Keep related code together</li>
+                                <li>Easy Sharing - Share with other developers via NPM</li>
+                                <li>Version Management - Track different versions</li>
+                            </ul>
+                        </div>
                     </div>
-                    
-                    <h3>Example: Proving L = {a^n b^n | n ≥ 0} is Non-Regular</h3>
-                    <div class="definition-box">
-                        <p><strong>Proof:</strong></p>
-                        <p>1. Assume L is regular with pumping length p</p>
-                        <p>2. Choose w = a^p b^p (clearly |w| = 2p ≥ p)</p>
-                        <p>3. By Pumping Lemma, w = xyz where |xy| ≤ p and |y| ≥ 1</p>
-                        <p>4. Since |xy| ≤ p, both x and y consist only of a's. So y = a^k where k ≥ 1</p>
-                        <p>5. Consider i = 2: xy^2 z = a^p b^p with y pumped once more = a^(p+k) b^p</p>
-                        <p>6. Since k ≥ 1, we have p+k > p, so a^(p+k) b^p ∉ L</p>
-                        <p>7. This contradicts condition 3 of the Pumping Lemma</p>
-                        <p>8. Therefore, L is not regular. ∎</p>
+
+                    <h3 class="section-heading">2. Step-by-Step Process (12 marks)</h3>
+
+                    <div class="step-by-step">
+                        <div class="step">
+                            <strong style="font-size: 1.2em; color: #667eea; display: block; margin-bottom: 10px;">Create Project Folder</strong>
+                            <p style="margin-bottom: 15px;">First, create a new folder for your module and navigate into it.</p>
+                            <div class="code-block">
+<pre>mkdir mymodule
+cd mymodule</pre>
+                            </div>
+                            <p><strong>Explanation:</strong> mkdir creates a new directory, cd changes into that directory</p>
+                        </div>
+
+                        <div class="step">
+                            <strong style="font-size: 1.2em; color: #667eea; display: block; margin-bottom: 10px;">Initialize NPM Package</strong>
+                            <p style="margin-bottom: 15px;">Run npm init to create package.json (project configuration file)</p>
+                            <div class="code-block">
+<pre>npm init -y
+
+// The -y flag accepts all defaults automatically
+// Creates package.json with default values</pre>
+                            </div>
+                            <p><strong>What happens:</strong> This creates a package.json file with project name, version, description, etc.</p>
+                        </div>
+
+                        <div class="step">
+                            <strong style="font-size: 1.2em; color: #667eea; display: block; margin-bottom: 10px;">Create Module File (add.js)</strong>
+                            <p style="margin-bottom: 15px;">Create the main module file with your reusable function</p>
+                            <div class="code-block">
+<pre>// add.js
+function add(a, b) {
+    return a + b;
+}
+
+// Export the function so it can be used in other files
+module.exports = add;</pre>
+                            </div>
+                            <p><strong>Explanation:</strong> module.exports makes this function available to other files that require it</p>
+                        </div>
+
+                        <div class="step">
+                            <strong style="font-size: 1.2em; color: #667eea; display: block; margin-bottom: 10px;">Create Main File (index.js)</strong>
+                            <p style="margin-bottom: 15px;">Create a file to use/test your module</p>
+                            <div class="code-block">
+<pre>// index.js
+const add = require('./add');
+
+console.log(add(10, 20));  // Output: 30
+console.log(add(5, 15));   // Output: 20
+console.log(add(100, 200)); // Output: 300</pre>
+                            </div>
+                            <p><strong>Explanation:</strong> require('./add') imports the add function from add.js file</p>
+                        </div>
+
+                        <div class="step">
+                            <strong style="font-size: 1.2em; color: #667eea; display: block; margin-bottom: 10px;">Run the Application</strong>
+                            <p style="margin-bottom: 15px;">Execute your module to see it in action</p>
+                            <div class="code-block">
+<pre>node index.js</pre>
+                            </div>
+                            <div class="output-box">
+                                <strong>✅ Expected Output:</strong>
+                                <pre>30
+20
+300</pre>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <h3>Common Non-Regular Languages</h3>
-                    <div class="example-box">
-                        <ul>
-                            <li>{a^n b^n | n ≥ 0} - Equal number of a's and b's</li>
-                            <li>{ww | w ∈ {a,b}*} - Strings that are repeated twice</li>
-                            <li>{a^n² | n ≥ 0} - Number of a's is a perfect square</li>
-                            <li>{a^n b^m | n < m} - More b's than a's</li>
-                            <li>{a^p | p is prime} - Number of a's is prime</li>
+
+                    <h3 class="section-heading">3. Directory Structure (2 marks)</h3>
+                    <div class="folder-structure">
+<pre>mymodule/
+│
+├── 📄 package.json    ← Project configuration
+├── 📄 add.js          ← Module with add function
+└── 📄 index.js        ← Main file that uses the module
+
+After running npm install:
+mymodule/
+│
+├── 📁 node_modules/   ← Installed packages (if any)
+├── 📄 package.json
+├── 📄 add.js
+└── 📄 index.js</pre>
+                    </div>
+
+                    <div class="note-box">
+                        <strong>📌 Understanding the Structure:</strong>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li><strong>package.json:</strong> Contains project metadata, dependencies, scripts</li>
+                            <li><strong>add.js:</strong> Your reusable module (can be imported anywhere)</li>
+                            <li><strong>index.js:</strong> Entry point that uses your module</li>
+                            <li><strong>node_modules:</strong> Folder where external packages are installed</li>
                         </ul>
                     </div>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> Choose your string w carefully - it should expose the "counting" or "matching" behavior that FAs cannot handle. Always show ALL steps of the proof explicitly!
+
+                    <h3 class="section-heading">4. Complete package.json Example</h3>
+                    <div class="code-block">
+<pre>{
+  "name": "mymodule",
+  "version": "1.0.0",
+  "description": "A simple addition module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"No tests yet\""
+  },
+  "keywords": ["math", "addition"],
+  "author": "Your Name",
+  "license": "MIT"
+}</pre>
+                    </div>
+
+                    <div class="key-points">
+                        <h3>🎯 Key Points to Remember:</h3>
+                        <ul>
+                            <li>Always start with "npm init" to create package.json</li>
+                            <li>Use module.exports to export functions/objects</li>
+                            <li>Use require() to import modules</li>
+                            <li>Keep related functionality in separate module files</li>
+                            <li>Test your module before publishing to NPM</li>
+                        </ul>
                     </div>
                 </div>
-                
-                <!-- CNF Theory -->
-                <div id="cnf" class="theory-content">
-                    <h2>Chomsky Normal Form (CNF)</h2>
-                    
-                    <h3>Introduction</h3>
-                    <p>Chomsky Normal Form is a simplified form of Context-Free Grammar where all production rules have a very specific structure. Converting a CFG to CNF is useful for parsing algorithms, proving properties about CFGs, and determining whether a string belongs to a language. The CYK (Cocke-Younger-Kasami) parsing algorithm requires grammars to be in CNF. CNF ensures that derivation trees are binary trees, making analysis and computation more systematic.</p>
-                    
-                    <div class="definition-box">
-                        <strong>Chomsky Normal Form Rules:</strong>
-                        <p>A CFG is in Chomsky Normal Form if all production rules are in one of these two forms:</p>
-                        <ol>
-                            <li><strong>A → BC</strong> (where A, B, C are non-terminals and B, C ≠ S)</li>
-                            <li><strong>A → a</strong> (where A is non-terminal and a is a terminal)</li>
-                            <li><strong>S → ε</strong> (only if ε is in the language, where S is the start symbol and S does not appear on the right side of any production)</li>
-                        </ol>
-                    </div>
-                    
-                    <h3>Steps to Convert CFG to CNF</h3>
-                    <div class="example-box">
-                        <p><strong>Step 1: Eliminate ε-productions</strong></p>
-                        <p>Find all nullable variables (variables that can derive ε) and eliminate ε-productions by creating new productions without nullable variables.</p>
-                        
-                        <p><strong>Step 2: Eliminate unit productions (A → B)</strong></p>
-                        <p>Replace unit productions by substituting the right-hand side of B's productions.</p>
-                        
-                        <p><strong>Step 3: Eliminate useless symbols</strong></p>
-                        <p>Remove variables that don't derive any terminal string and variables unreachable from start symbol.</p>
-                        
-                        <p><strong>Step 4: Convert to proper form</strong></p>
-                        <p>For productions like A → a₁a₂...aₙ (n ≥ 2) or A → B₁B₂...Bₘ (m ≥ 3):
-                        <ul>
-                            <li>Replace each terminal aᵢ with new non-terminal Xᵢ and add Xᵢ → aᵢ</li>
-                            <li>Break long productions into binary ones using new non-terminals</li>
-                        </ul>
-                        </p>
-                    </div>
-                    
-                    <h3>Example Conversion</h3>
-                    <div class="definition-box">
-                        <p><strong>Original Grammar:</strong></p>
-                        <p>S → ASA | aB<br>
-                        A → B | S<br>
-                        B → b | ε</p>
-                        
-                        <p><strong>After CNF Conversion:</strong></p>
-                        <p>S → AA₁ | UB | a | SA | AS<br>
-                        A → UB | a | SA | AS | AA₁<br>
-                        A₁ → SA<br>
-                        B → b<br>
-                        U → a</p>
-                    </div>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> Show each step of conversion separately with clear headings. Number your new non-terminals systematically (A₁, A₂, etc.). Verify final form matches CNF rules!
-                    </div>
+            </div>
+
+            <!-- Question 4: Timeouts -->
+            <div class="question-block">
+                <div class="question-header">
+                    <div class="question-number">QUESTION 4</div>
+                    <div class="question-title">Demonstrate the use of setTimeout() function with a program that schedules multiple timeouts and explain its execution flow.</div>
+                    <div class="marks">📝 16 Marks</div>
                 </div>
-                
-                <!-- Decidability Theory -->
-                <div id="decidability" class="theory-content">
-                    <h2>Decidability and Undecidability</h2>
-                    
-                    <h3>Introduction</h3>
-                    <p>Decidability deals with whether there exists an algorithm (Turing Machine) that can determine the answer to a problem in finite time for all inputs. A problem is decidable if we can write an algorithm that always halts with a yes/no answer. A problem is undecidable if no such algorithm exists. Understanding decidability helps us recognize the fundamental limits of computation - some problems are inherently unsolvable by any computer program, no matter how clever the algorithm or how fast the hardware.</p>
-                    
-                    <h3>Key Definitions</h3>
-                    <div class="definition-box">
-                        <p><strong>Decidable Language (Recursive Language):</strong> A language L is decidable if there exists a Turing Machine that halts on all inputs and accepts strings in L and rejects strings not in L.</p>
-                        
-                        <p><strong>Recognizable Language (Recursively Enumerable - RE):</strong> A language L is recognizable if there exists a TM that accepts all strings in L (but may loop forever on strings not in L).</p>
-                        
-                        <p><strong>Undecidable Language:</strong> A language that is not decidable - no TM can always halt and give correct answer for all inputs.</p>
+
+                <div class="answer-section">
+                    <div class="intro">
+                        <strong>Introduction:</strong> setTimeout() is a built-in JavaScript function that executes code after a specified delay (in milliseconds). It's useful for scheduling tasks, creating delays, or simulating asynchronous behavior in applications.
                     </div>
-                    
-                    <h3>Relationship Between Language Classes</h3>
-                    <div class="example-box">
-                        <ul>
-                            <li><strong>All Decidable languages are Recognizable</strong> (but not vice versa)</li>
-                            <li><strong>Decidable ⊂ Recognizable ⊂ All Languages</strong></li>
-                            <li>If both L and L̄ (complement) are recognizable, then L is decidable</li>
-                            <li>There exist languages that are not even recognizable</li>
-                        </ul>
+
+                    <h3 class="section-heading">1. What is setTimeout()? (2 marks)</h3>
+                    <div class="points-list">
+                        <div class="point-item">
+                            <strong>Definition:</strong>
+                            setTimeout() is a function that schedules a callback function to run after a specified time delay.
+                        </div>
+                        <div class="point-item">
+                            <strong>Syntax:</strong>
+                            <div class="code-block">
+<pre>setTimeout(function, delayInMilliseconds);
+
+// Example:
+setTimeout(() => {
+    console.log("Hello!");
+}, 2000);  // Runs after 2 seconds</pre>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <h3>The Halting Problem (Classic Undecidable Problem)</h3>
-                    <div class="definition-box">
-                        <p><strong>Problem Statement:</strong> Given a Turing Machine M and an input w, determine whether M halts on input w.</p>
-                        
-                        <p><strong>Proof of Undecidability (by Diagonalization):</strong></p>
-                        <p>1. Assume there exists a TM H that solves the halting problem</p>
-                        <p>2. H takes ⟨M, w⟩ as input and outputs "yes" if M halts on w, "no" otherwise</p>
-                        <p>3. Construct a new TM D that uses H as a subroutine:
-                            <ul>
-                                <li>D on input ⟨M⟩: If H(⟨M, ⟨M⟩⟩) = "yes", then loop forever</li>
-                                <li>If H(⟨M, ⟨M⟩⟩) = "no", then halt</li>
-                            </ul>
-                        </p>
-                        <p>4. Now run D on its own description: D(⟨D⟩)</p>
-                        <p>5. This creates a contradiction:
-                            <ul>
-                                <li>If D halts on ⟨D⟩, then H says "yes", so D loops forever (contradiction)</li>
-                                <li>If D loops on ⟨D⟩, then H says "no", so D halts (contradiction)</li>
-                            </ul>
-                        </p>
-                        <p>6. Therefore, no such TM H can exist, and the halting problem is undecidable. ∎</p>
+
+                    <h3 class="section-heading">2. Program Objective (1 mark)</h3>
+                    <div class="note-box">
+                        <strong>🎯 Goal:</strong>
+                        To create a program that schedules multiple timeouts at different intervals and displays messages showing how much time has elapsed since each was scheduled.
                     </div>
-                    
-                    <h3>Other Undecidable Problems</h3>
-                    <div class="example-box">
-                        <ul>
-                            <li><strong>Halting Problem:</strong> Does TM M halt on input w?</li>
-                            <li><strong>Emptiness Problem for TM:</strong> Is L(M) = ∅?</li>
-                            <li><strong>Equivalence Problem:</strong> Do two TMs accept the same language?</li>
-                            <li><strong>Post Correspondence Problem (PCP):</strong> Finding matching sequence of tiles</li>
-                            <li><strong>Rice's Theorem:</strong> Any non-trivial property of TM languages is undecidable</li>
-                        </ul>
+
+                    <h3 class="section-heading">3. Complete Code Implementation (5 marks)</h3>
+                    <div class="code-block">
+<pre>// Function to display timeout message
+function simpleTimeout(ms) {
+    console.log(`Timeout after ${ms} milliseconds.`);
+}
+
+// Start message
+console.log("Scheduling timeouts...");
+
+// Schedule multiple timeouts
+setTimeout(() => simpleTimeout(1000), 1000);  // After 1 second
+setTimeout(() => simpleTimeout(2000), 2000);  // After 2 seconds
+setTimeout(() => simpleTimeout(3000), 3000);  // After 3 seconds
+setTimeout(() => simpleTimeout(4000), 4000);  // After 4 seconds
+
+console.log("All timeouts scheduled! Waiting for execution...");</pre>
                     </div>
-                    
-                    <h3>Decidable Problems</h3>
-                    <div class="example-box">
-                        <ul>
-                            <li>Membership problem for DFA/NFA: Does M accept w?</li>
-                            <li>Emptiness for DFA: Is L(M) = ∅?</li>
-                            <li>Equivalence for DFA: Do M₁ and M₂ accept same language?</li>
-                            <li>Membership for CFG: Does grammar G generate string w?</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> For undecidability proofs, use reduction technique - show that if the new problem were decidable, we could solve a known undecidable problem. Always explain the contradiction clearly!
-                    </div>
-                </div>
-                
-                <!-- P vs NP Theory -->
-                <div id="pnp" class="theory-content">
-                    <h2>P vs NP - Complexity Classes</h2>
-                    
-                    <h3>Introduction</h3>
-                    <p>Complexity theory classifies computational problems based on the resources (time, space) needed to solve them. The P vs NP question is one of the most important unsolved problems in computer science and mathematics. Understanding these complexity classes helps us determine which problems can be solved efficiently and which problems are inherently difficult. This has practical implications for cryptography, optimization, scheduling, and many real-world applications.</p>
-                    
-                    <h3>Class P (Polynomial Time)</h3>
-                    <div class="definition-box">
-                        <p><strong>Definition:</strong> P is the class of decision problems that can be solved by a deterministic Turing Machine in polynomial time.</p>
-                        <p><strong>Formally:</strong> P = {L | L is decidable by a DTM in time O(n^k) for some constant k}</p>
-                        <p><strong>Interpretation:</strong> Problems in P are considered "efficiently solvable" or "tractable"</p>
-                        <p><strong>Examples:</strong>
-                            <ul>
-                                <li>Sorting numbers</li>
-                                <li>Finding shortest path in a graph (Dijkstra's algorithm)</li>
-                                <li>Determining if a number is prime (AKS primality test)</li>
-                                <li>Matrix multiplication</li>
-                                <li>Linear programming</li>
-                            </ul>
-                        </p>
-                    </div>
-                    
-                    <h3>Class NP (Non-deterministic Polynomial Time)</h3>
-                    <div class="definition-box">
-                        <p><strong>Definition:</strong> NP is the class of decision problems where a "yes" answer can be verified in polynomial time given a certificate (proof/solution).</p>
-                        <p><strong>Formally:</strong> NP = {L | L is decidable by a non-deterministic TM in polynomial time}</p>
-                        <p><strong>Alternative Definition:</strong> A problem is in NP if, given a solution, we can verify it's correct in polynomial time</p>
-                        <p><strong>Examples:</strong>
-                            <ul>
-                                <li>Traveling Salesman Problem (TSP) - finding shortest route visiting all cities</li>
-                                <li>Boolean Satisfiability (SAT) - can boolean formula be satisfied?</li>
-                                <li>Graph Coloring - can graph be colored with k colors?</li>
-                                <li>Subset Sum - does subset of numbers sum to target?</li>
-                                <li>Hamiltonian Path - does path exist visiting each vertex once?</li>
-                            </ul>
-                        </p>
-                    </div>
-                    
-                    <h3>Relationship Between P and NP</h3>
-                    <div class="example-box">
-                        <p><strong>Known:</strong> P ⊆ NP (every problem solvable in polynomial time can be verified in polynomial time)</p>
-                        <p><strong>Unknown:</strong> P = NP or P ≠ NP?</p>
-                        <p><strong>The Million Dollar Question:</strong> If we can verify a solution quickly, can we also find the solution quickly?</p>
-                    </div>
-                    
+
+                    <h3 class="section-heading">4. Execution Flow Timeline (4 marks)</h3>
                     <div class="diagram">
-                        <svg width="450" height="280" viewBox="0 0 450 280">
-                            <!-- Two possible scenarios -->
-                            <text x="225" y="20" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Two Possible Scenarios:</text>
-                            
-                            <!-- Scenario 1: P = NP -->
-                            <text x="110" y="50" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e7d32">If P = NP</text>
-                            <circle cx="110" cy="140" r="70" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
-                            <text x="110" y="145" text-anchor="middle" font-size="18" fill="#2e7d32" font-weight="bold">P = NP</text>
-                            
-                            <!-- Scenario 2: P ≠ NP -->
-                            <text x="340" y="50" text-anchor="middle" font-size="14" font-weight="bold" fill="#c62828">If P ≠ NP (widely believed)</text>
-                            <ellipse cx="340" cy="140" rx="90" ry="70" fill="#ffebee" stroke="#c62828" stroke-width="2"/>
-                            <text x="340" y="115" text-anchor="middle" font-size="16" fill="#c62828" font-weight="bold">NP</text>
-                            <circle cx="310" cy="145" r="40" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
-                            <text x="310" y="150" text-anchor="middle" font-size="16" fill="#1565c0" font-weight="bold">P</text>
-                            <text x="380" y="145" text-anchor="middle" font-size="12" fill="#c62828">NP-Complete</text>
-                        </svg>
+                        <div style="max-width: 600px; margin: 0 auto;">
+                            <div class="timeline-item" style="background: #e6f2ff; border-color: #3182ce;">
+                                <strong>⏰ Time: 0ms (Start)</strong>
+                                <p>Program begins execution</p>
+                                <div class="output-box" style="margin-top: 10px;">
+                                    <pre>Scheduling timeouts...
+All timeouts scheduled! Waiting for execution...</pre>
+                                </div>
+                            </div>
+
+                            <div style="text-align: center; margin: 20px 0; color: #667eea; font-size: 2em;">
+                                ⬇️ 1000ms delay
+                            </div>
+
+                            <div class="timeline-item" style="background: #f0fff4; border-color: #48bb78;">
+                                <strong>⏰ Time: 1000ms (1 second)</strong>
+                                <p>First timeout executes</p>
+                                <div class="output-box" style="margin-top: 10px;">
+                                    <pre>Timeout after 1000 milliseconds.</pre>
+                                </div>
+                            </div>
+
+                            <div style="text-align: center; margin: 20px 0; color: #667eea; font-size: 2em;">
+                                ⬇️ 1000ms delay
+                            </div>
+
+                            <div class="timeline-item" style="background: #fff5e1; border-color: #f39c12;">
+                                <strong>⏰ Time: 2000ms (2 seconds)</strong>
+                                <p>Second timeout executes</p>
+                                <div class="output-box" style="margin-top: 10px;">
+                                    <pre>Timeout after 2000 milliseconds.</pre>
+                                </div>
+                            </div>
+
+                            <div style="text-align: center; margin: 20px 0; color: #667eea; font-size: 2em;">
+                                ⬇️ 1000ms delay
+                            </div>
+
+                            <div class="timeline-item" style="background: #fef5e7; border-color: #e67e22;">
+                                <strong>⏰ Time: 3000ms (3 seconds)</strong>
+                                <p>Third timeout executes</p>
+                                <div class="output-box" style="margin-top: 10px;">
+                                    <pre>Timeout after 3000 milliseconds.</pre>
+                                </div>
+                            </div>
+
+                            <div style="text-align: center; margin: 20px 0; color: #667eea; font-size: 2em;">
+                                ⬇️ 1000ms delay
+                            </div>
+
+                            <div class="timeline-item" style="background: #fee; border-color: #e74c3c;">
+                                <strong>⏰ Time: 4000ms (4 seconds)</strong>
+                                <p>Fourth timeout executes</p>
+                                <div class="output-box" style="margin-top: 10px;">
+                                    <pre>Timeout after 4000 milliseconds.</pre>
+                                </div>
+                            </div>
+
+                            <div style="text-align: center; margin: 20px 0;">
+                                <div class="box" style="background: #2d3748; color: white;">
+                                    ✅ Program Completed
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <h3>NP-Complete Problems</h3>
-                    <div class="definition-box">
-                        <p><strong>Definition:</strong> A problem is NP-Complete if:</p>
-                        <ol>
-                            <li>It is in NP (solutions can be verified in polynomial time)</li>
-                            <li>Every problem in NP can be reduced to it in polynomial time (it is "NP-Hard")</li>
-                        </ol>
-                        <p><strong>Significance:</strong> If ANY NP-Complete problem can be solved in polynomial time, then P = NP!</p>
-                        <p><strong>First NP-Complete Problem:</strong> Boolean Satisfiability (SAT) - proved by Cook-Levin theorem (1971)</p>
-                        <p><strong>Common NP-Complete Problems:</strong>
-                            <ul>
-                                <li>SAT (Boolean Satisfiability)</li>
-                                <li>3-SAT (SAT with clauses of exactly 3 literals)</li>
-                                <li>Vertex Cover</li>
-                                <li>Clique Problem</li>
-                                <li>Hamiltonian Cycle</li>
-                                <li>Traveling Salesman Problem (decision version)</li>
-                            </ul>
-                        </p>
+
+                    <h3 class="section-heading">5. Complete Output (2 marks)</h3>
+                    <div class="output-box">
+                        <strong>✅ Console Output:</strong>
+                        <pre>Scheduling timeouts...
+All timeouts scheduled! Waiting for execution...
+Timeout after 1000 milliseconds.
+Timeout after 2000 milliseconds.
+Timeout after 3000 milliseconds.
+Timeout after 4000 milliseconds.</pre>
                     </div>
-                    
-                    <h3>Polynomial-Time Reduction</h3>
-                    <div class="example-box">
-                        <p><strong>Definition:</strong> Problem A reduces to problem B (A ≤ₚ B) if:</p>
-                        <ul>
-                            <li>There exists a polynomial-time algorithm to transform any instance of A into an instance of B</li>
-                            <li>The answer for A is "yes" if and only if the answer for B is "yes"</li>
+
+                    <h3 class="section-heading">6. How It Works - Detailed Explanation (2 marks)</h3>
+                    <div class="points-list">
+                        <div class="point-item">
+                            <strong>Step 1 - Synchronous Execution:</strong>
+                            First, "Scheduling timeouts..." is printed immediately. Then all setTimeout() calls are registered (but not executed yet). Finally, "All timeouts scheduled!" is printed.
+                        </div>
+                        <div class="point-item">
+                            <strong>Step 2 - Asynchronous Execution:</strong>
+                            Node.js waits for the specified delays. After 1000ms, first timeout runs. After 2000ms, second runs, and so on. This is non-blocking - the program doesn't freeze while waiting.
+                        </div>
+                        <div class="point-item">
+                            <strong>Step 3 - Callback Execution:</strong>
+                            When each timeout's delay completes, its callback function (simpleTimeout) is executed with the appropriate millisecond value.
+                        </div>
+                    </div>
+
+                    <div class="note-box">
+                        <strong>💡 Important Concepts:</strong>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li><strong>Non-blocking:</strong> Code after setTimeout() runs immediately, doesn't wait</li>
+                            <li><strong>Asynchronous:</strong> Timeouts execute in the background</li>
+                            <li><strong>Callback:</strong> The function passed to setTimeout() is called later</li>
+                            <li><strong>1000ms = 1 second:</strong> Delays are in milliseconds</li>
                         </ul>
-                        <p><strong>Implication:</strong> If A ≤ₚ B and B is in P, then A is also in P</p>
                     </div>
-                    
-                    <h3>Practical Implications</h3>
-                    <div class="tip">
-                        <p><strong>If P = NP:</strong></p>
+
+                    <div class="key-points">
+                        <h3>🎯 Key Points to Remember:</h3>
                         <ul>
-                            <li>Many "hard" problems become easy to solve</li>
-                            <li>Modern cryptography would be broken</li>
-                            <li>Would revolutionize optimization, scheduling, and planning</li>
+                            <li>setTimeout() schedules code to run after a delay</li>
+                            <li>Delay is specified in milliseconds (1000ms = 1 second)</li>
+                            <li>Code execution is non-blocking and asynchronous</li>
+                            <li>Multiple setTimeout() can be scheduled simultaneously</li>
+                            <li>Synchronous code runs first, then timeouts execute</li>
                         </ul>
-                        <p><strong>If P ≠ NP (widely believed):</strong></p>
-                        <ul>
-                            <li>Some problems are inherently difficult</li>
-                            <li>We must use approximation algorithms or heuristics</li>
-                            <li>Cryptography remains secure</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> Always draw the P vs NP diagram, explain NP-Complete problems, and mention Cook-Levin theorem. Give examples of problems in each class!
                     </div>
                 </div>
-                
-                <!-- DFA Minimization Theory -->
-                <div id="minimization" class="theory-content">
-                    <h2>DFA Minimization</h2>
-                    
-                    <h3>Introduction</h3>
-                    <p>DFA Minimization is the process of reducing a DFA to its smallest equivalent form - a DFA with the minimum number of states that accepts the same language. This is important for optimizing memory usage in implementations and simplifying automata for analysis. The minimization algorithm ensures that the resulting DFA is unique for any given regular language. This minimal DFA is the most efficient representation possible.</p>
-                    
-                    <div class="definition-box">
-                        <p><strong>Key Concept:</strong> Two states are equivalent if, for every possible input string, they lead to the same acceptance behavior (both accept or both reject). States that are not equivalent are distinguishable.</p>
+            </div>
+
+            <!-- Question 5: Events with Parameters -->
+            <div class="question-block">
+                <div class="question-header">
+                    <div class="question-number">QUESTION 5</div>
+                    <div class="question-title">Explain how to pass additional parameters to event listeners using anonymous functions with a complete working example.</div>
+                    <div class="marks">📝 16 Marks</div>
+                </div>
+
+                <div class="answer-section">
+                    <div class="intro">
+                        <strong>Introduction:</strong> In Node.js, events normally accept limited parameters when emitted. However, we often need to pass extra information to event handlers. We can achieve this using anonymous wrapper functions (also called closures) that capture additional data.
                     </div>
-                    
-                    <h3>Algorithm: Table-Filling (Marking) Method</h3>
-                    <div class="example-box">
-                        <p><strong>Step 1: Remove Unreachable States</strong></p>
-                        <p>Eliminate any states that cannot be reached from the start state.</p>
-                        
-                        <p><strong>Step 2: Initialize Distinguishability Table</strong></p>
-                        <p>Create a table with all pairs of states (p, q). Mark pairs where one is final and other is non-final (these are immediately distinguishable).</p>
-                        
-                        <p><strong>Step 3: Iteratively Mark Distinguished Pairs</strong></p>
-                        <p>For each unmarked pair (p, q) and each input symbol a:</p>
+
+                    <h3 class="section-heading">1. Understanding the Problem (2 marks)</h3>
+                    <div class="points-list">
+                        <div class="point-item">
+                            <strong>Basic Event Limitation:</strong>
+                            When you emit an event, you can only pass parameters that are specified in the emit() call. Sometimes you need additional context or data that isn't available at emit time.
+                        </div>
+                        <div class="point-item">
+                            <strong>Solution:</strong>
+                            Use an anonymous function (closure) to wrap your event handler. This function can access both the emitted parameters AND additional variables from its surrounding scope.
+                        </div>
+                    </div>
+
+                    <h3 class="section-heading">2. What is an Anonymous Function? (2 marks)</h3>
+                    <div class="code-block">
+<pre>// Regular Named Function
+function greet() {
+    console.log("Hello");
+}
+
+// Anonymous Function (no name)
+function() {
+    console.log("Hello");
+}
+
+// Anonymous Function in Event Listener
+emitter.on("event", function() {
+    console.log("Event fired!");
+});</pre>
+                    </div>
+                    <div class="note-box">
+                        <strong>📌 Definition:</strong>
+                        An anonymous function is a function without a name. It's often used as a callback or wrapper function. It can access variables from its outer scope (closure).
+                    </div>
+
+                    <h3 class="section-heading">3. Complete Code Example (6 marks)</h3>
+                    <div class="code-block">
+<pre>// Import EventEmitter class
+const EventEmitter = require('events');
+
+// Create an instance of EventEmitter
+const emitter = new EventEmitter();
+
+// Register event listener with anonymous wrapper function
+emitter.on("login", (username) => {
+    // Anonymous function with additional parameter
+    (function(extraInfo){
+        console.log("User:", username);
+        console.log("Extra:", extraInfo);
+    })("Logged in from Chrome Browser");
+});
+
+// Emit the event with username
+emitter.emit("login", "Nazeeha");</pre>
+                    </div>
+
+                    <h3 class="section-heading">4. Code Breakdown - Line by Line (4 marks)</h3>
+                    <div class="step-by-step">
+                        <div class="step">
+                            <strong style="font-size: 1.2em; color: #667eea; display: block; margin-bottom: 10px;">Import EventEmitter</strong>
+                            <div class="code-block">
+<pre>const EventEmitter = require('events');</pre>
+                            </div>
+                            <p>Imports the built-in events module which provides EventEmitter class for creating custom events.</p>
+                        </div>
+
+                        <div class="step">
+                            <strong style="font-size: 1.2em; color: #667eea; display: block; margin-bottom: 10px;">Create Emitter Instance</strong>
+                            <div class="code-block">
+<pre>const emitter = new EventEmitter();</pre>
+                            </div>
+                            <p>Creates a new event emitter object that can register listeners and emit events.</p>
+                        </div>
+
+                        <div class="step">
+                            <strong style="font-size: 1.2em; color: #667eea; display: block; margin-bottom: 10px;">Register Event Listener</strong>
+                            <div class="code-block">
+<pre>emitter.on("login", (username) => {
+    // This arrow function receives username from emit
+});</pre>
+                            </div>
+                            <p>Registers a listener for "login" event. The username parameter will be passed when event is emitted.</p>
+                        </div>
+
+                        <div class="step">
+                            <strong style="font-size: 1.2em; color: #667eea; display: block; margin-bottom: 10px;">Anonymous Function with Extra Parameter</strong>
+                            <div class="code-block">
+<pre>(function(extraInfo){
+    console.log("User:", username);      // From emit
+    console.log("Extra:", extraInfo);    // From function call
+})("Logged in from Chrome Browser");</pre>
+                            </div>
+                            <p>An Immediately Invoked Function Expression (IIFE). It's defined and executed immediately with the extra parameter. It has access to both username (from outer scope) and extraInfo (its own parameter).</p>
+                        </div>
+
+                        <div class="step">
+                            <strong style="font-size: 1.2em; color: #667eea; display: block; margin-bottom: 10px;">Emit the Event</strong>
+                            <div class="code-block">
+<pre>emitter.emit("login", "Nazeeha");</pre>
+                            </div>
+                            <p>Triggers the "login" event and passes "Nazeeha" as the username parameter to all registered listeners.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="section-heading">5. Event Flow Diagram (3 marks)</h3>
+                    <div class="diagram">
+                        <div class="box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                            <strong>📝 Step 1: Register Listener</strong><br>
+                            emitter.on("login", callback)
+                        </div>
+                        <div class="arrow">⬇️</div>
+                        <div class="box" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white;">
+                            <strong>🚀 Step 2: Emit Event</strong><br>
+                            emitter.emit("login", "Nazeeha")
+                        </div>
+                        <div class="arrow">⬇️</div>
+                        <div class="box" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); color: white;">
+                            <strong>📦 Step 3: Pass Username</strong><br>
+                            username = "Nazeeha"
+                        </div>
+                        <div class="arrow">⬇️</div>
+                        <div class="box" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white;">
+                            <strong>⚡ Step 4: Execute IIFE</strong><br>
+                            Anonymous function runs with extraInfo
+                        </div>
+                        <div class="arrow">⬇️</div>
+                        <div class="box" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); color: white;">
+                            <strong>✅ Step 5: Output Generated</strong><br>
+                            Both parameters printed to console
+                        </div>
+                    </div>
+
+                    <h3 class="section-heading">6. Program Output (2 marks)</h3>
+                    <div class="output-box">
+                        <strong>✅ Console Output:</strong>
+                        <pre>User: Nazeeha
+Extra: Logged in from Chrome Browser</pre>
+                    </div>
+
+                    <h3 class="section-heading">7. Why Use This Pattern? (2 marks)</h3>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>🎯 Pass Extra Data</h4>
+                            <p>Add context information not available at emit time</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🔒 Closure Access</h4>
+                            <p>Access to both outer and inner scope variables</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>⚡ Immediate Execution</h4>
+                            <p>IIFE runs right away with extra parameters</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🛠️ Flexibility</h4>
+                            <p>Combine event data with static/dynamic data</p>
+                        </div>
+                    </div>
+
+                    <h3 class="section-heading">8. Real-World Use Cases</h3>
+                    <div class="points-list">
+                        <div class="point-item">
+                            <strong>User Authentication:</strong>
+                            Pass username from event + browser info, IP address, login time
+                        </div>
+                        <div class="point-item">
+                            <strong>Logging Systems:</strong>
+                            Combine event data with timestamp, log level, application context
+                        </div>
+                        <div class="point-item">
+                            <strong>E-commerce:</strong>
+                            Pass product ID from event + user session, cart info, recommendations
+                        </div>
+                    </div>
+
+                    <div class="key-points">
+                        <h3>🎯 Key Points to Remember:</h3>
                         <ul>
-                            <li>Find states r = δ(p, a) and s = δ(q, a)</li>
-                            <li>If pair (r, s) is marked, then mark (p, q)</li>
-                            <li>Repeat until no new pairs can be marked</li>
+                            <li>Events normally pass limited parameters via emit()</li>
+                            <li>Anonymous functions can access outer scope (closure)</li>
+                            <li>IIFE = Immediately Invoked Function Expression</li>
+                            <li>Pattern: (function(param) { code })(value);</li>
+                            <li>Useful for adding context data to event handlers</li>
+                            <li>EventEmitter is from 'events' built-in module</li>
                         </ul>
-                        
-                        <p><strong>Step 4: Merge Equivalent States</strong></p>
-                        <p>States that remain unmarked are equivalent. Merge them into single states to create the minimal DFA.</p>
-                    </div>
-                    
-                    <h3>Example</h3>
-                    <div class="definition-box">
-                        <p><strong>Original DFA:</strong> States {q₀, q₁, q₂, q₃, q₄}</p>
-                        <p>After analysis, if we find (q₁, q₃) equivalent and (q₂, q₄) equivalent:</p>
-                        <p><strong>Minimal DFA:</strong> Merge q₁ with q₃, merge q₂ with q₄</p>
-                        <p>Result: States {q₀, q₁₃, q₂₄} where q₁₃ = {q₁, q₃} and q₂₄ = {q₂, q₄}</p>
-                    </div>
-                    
-                    <h3>Properties of Minimal DFA</h3>
-                    <div class="example-box">
-                        <ul>
-                            <li>The minimal DFA is unique (up to state renaming)</li>
-                            <li>No two states in minimal DFA are equivalent</li>
-                            <li>All states are reachable from start state</li>
-                            <li>It has the minimum number of states among all DFAs accepting the same language</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> Draw the distinguishability table clearly! Show initial markings, then mark pairs iteratively. Finally draw the minimized DFA with merged states clearly labeled!
                     </div>
                 </div>
-                
-                <!-- Closure Properties Theory -->
-                <div id="closure" class="theory-content">
-                    <h2>Closure Properties of Regular Languages</h2>
-                    
-                    <h3>Introduction</h3>
-                    <p>Closure properties tell us that when we perform certain operations on regular languages, the result is also a regular language. These properties are fundamental for proving that complex languages are regular and for simplifying automata constructions. Understanding closure properties helps in designing efficient algorithms and proving language properties without constructing explicit automata.</p>
-                    
-                    <h3>Regular Languages are Closed Under:</h3>
-                    
-                    <div class="definition-box">
-                        <p><strong>1. Union (L₁ ∪ L₂)</strong></p>
-                        <p>If L₁ and L₂ are regular, then L₁ ∪ L₂ is regular.</p>
-                        <p><strong>Proof Method:</strong> Construct NFA with ε-transitions from new start state to start states of both NFAs.</p>
-                    </div>
-                    
-                    <div class="definition-box">
-                        <p><strong>2. Concatenation (L₁ · L₂)</strong></p>
-                        <p>If L₁ and L₂ are regular, then L₁ · L₂ is regular.</p>
-                        <p><strong>Proof Method:</strong> Add ε-transitions from all final states of first NFA to start state of second NFA.</p>
-                    </div>
-                    
-                    <div class="definition-box">
-                        <p><strong>3. Kleene Star (L*)</strong></p>
-                        <p>If L is regular, then L* is regular.</p>
-                        <p><strong>Proof Method:</strong> Add ε-transitions from final states back to start state, and make start state final.</p>
-                    </div>
-                    
-                    <div class="definition-box">
-                        <p><strong>4. Complement (L̄)</strong></p>
-                        <p>If L is regular, then L̄ = Σ* - L is regular.</p>
-                        <p><strong>Proof Method:</strong> In DFA for L, swap final and non-final states.</p>
-                    </div>
-                    
-                    <div class="definition-box">
-                        <p><strong>5. Intersection (L₁ ∩ L₂)</strong></p>
-                        <p>If L₁ and L₂ are regular, then L₁ ∩ L₂ is regular.</p>
-                        <p><strong>Proof Method:</strong> Use De Morgan's law: L₁ ∩ L₂ = (L̄₁ ∪ L̄₂)̄, or construct product automaton.</p>
-                    </div>
-                    
-                    <div class="definition-box">
-                        <p><strong>6. Difference (L₁ - L₂)</strong></p>
-                        <p>If L₁ and L₂ are regular, then L₁ - L₂ is regular.</p>
-                        <p><strong>Proof Method:</strong> L₁ - L₂ = L₁ ∩ L̄₂</p>
-                    </div>
-                    
-                    <div class="definition-box">
-                        <p><strong>7. Reversal (L^R)</strong></p>
-                        <p>If L is regular, then L^R (reverse of all strings) is regular.</p>
-                        <p><strong>Proof Method:</strong> Reverse all transitions in NFA, swap start and final states.</p>
-                    </div>
-                    
-                    <h3>Product Construction (for Intersection)</h3>
-                    <div class="example-box">
-                        <p>Given DFA₁ = (Q₁, Σ, δ₁, q₁, F₁) and DFA₂ = (Q₂, Σ, δ₂, q₂, F₂)</p>
-                        <p>Product DFA = (Q₁ × Q₂, Σ, δ, (q₁, q₂), F₁ × F₂)</p>
-                        <p>Where δ((p, q), a) = (δ₁(p, a), δ₂(q, a))</p>
-                        <p>State (p, q) is final if both p ∈ F₁ and q ∈ F₂</p>
-                    </div>
-                    
-                    <h3>Applications</h3>
-                    <div class="example-box">
-                        <ul>
-                            <li>Proving languages are regular without explicit construction</li>
-                            <li>Simplifying complex language descriptions</li>
-                            <li>Building compilers and lexical analyzers</li>
-                            <li>Text processing and pattern matching</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tip">
-                        <strong>✍️ Exam Tip:</strong> For closure property proofs, explain the construction method clearly. If asked to show L₁ ∩ L₂ is regular, either use product construction or De Morgan's law with proper justification!
-                    </div>
-                </div>
-                
+            </div>
+
+            <div class="print-tip" style="margin-top: 40px;">
+                🎓 Study Complete! Review each question, practice the code examples, and draw the diagrams on paper for better retention.
             </div>
         </div>
     </div>
-    
-  <script>
-        function showTheory(topicId) {
-            // Hide all theory contents
-            const allContents = document.querySelectorAll('.theory-content');
-            allContents.forEach(content => content.classList.remove('active'));
-            
-            // Remove active class from all buttons
-            const allButtons = document.querySelectorAll('.topic-btn');
-            allButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Show selected theory
-            document.getElementById(topicId).classList.add('active');
-            
-            // Highlight active button
-            event.target.classList.add('active');
-        }
-    </script>
 </body>
 </html>
